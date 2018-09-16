@@ -1,1 +1,20 @@
-/* You can add global styles to this file, and also import other style files */
+body {
+  margin: 0;
+  font: 16px 'Raleway', Arial, 'Helvetica Neue', Helvetica, sans-serif;
+  font-weight: 400;
+}
+
+.container {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+.flex_list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.link {
+  text-decoration: none;
+}

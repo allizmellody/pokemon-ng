@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-const Pokemon = require('./server/models/pokemon');
-const { getConnect } = require('./server/config');
+const Pokemon = require('./models/pokemon');
+const { getConnect } = require('./config/index');
 const { pokemons } = require('../pokemons.json');
 
 mongoose.connect(getConnect(), { useNewUrlParser: true })
@@ -17,4 +17,4 @@ mongoose.connect(getConnect(), { useNewUrlParser: true })
       })
       .catch((error) => console.log(error))
   })
-  .catch((e) => console.log(e));
+  .catch((error) => console.log(error));

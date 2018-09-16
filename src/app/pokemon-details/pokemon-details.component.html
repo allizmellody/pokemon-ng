@@ -1,0 +1,6 @@
+<app-pokemon-card [pokemon]="pokemon">
+  <p>Status:
+    <span *ngIf="pokemon.catchedDate; else elseBlock">{{ pokemon.catchedDate }}</span>
+    <span #elseBlock>not catched.</span>
+  </p>
+</app-pokemon-card>

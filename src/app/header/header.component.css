@@ -1,0 +1,33 @@
+.header {
+  background: #009688;
+}
+
+.header_container {
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+}
+
+.header_link {
+  color: #fff;
+  font-size: 18px;
+}
+
+.header_link:hover {
+  color: #80cbc4;
+}
+
+.link_active {
+  color: #80cbc4;
+}
+
+.link_logo {
+  font-size: 21px;
+  margin-right: 25px ;
+}
+
+.logo {
+  font-weight: 900;
+  margin: 0;
+  color: #fff;
+}

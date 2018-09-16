@@ -7,18 +7,29 @@ const checkToken = require('../config/checkToken');
 
 router.use(bodyParser.json());
 
-router.get('/:page?', async(req, res) => {
-  const { limit } = req.query;
+router.get('/?', async (req, res) => {
+  const { page, limit } = req.query;
   const pokemons = await Pokemon
   .find()
-  .skip((limit * req.params.page) - limit)
+  .skip((limit * page) - limit)
   .limit(Number(limit));
   res.status(200).send(pokemons);
 });
 
-router.post('/:pokename', checkToken, (req, res) => {
-  Pokemon.findOne({ name: req.params.pokename }, (err, pokemon) => {
-    if (pokemon) {
+router.get('/:pokename', async (req, res) => {
+  try {
+    const pokemon = await Pokemon
+    .findOne({ name: req.params.pokename });
+    res.status(200).send(pokemon);
+  } catch (e) {
+    res.status(404).send('Current pokemon does not exist');
+  }
+});
+
+router.post('/:pokename', checkToken, async (req, res) => {
+  try {
+    const pokemon = Pokemon.findOne({ name: req.params.pokename });
+    pokemon.catchedDate = new Date();
       User.findByIdAndUpdate(
         req.userId,
         { $push: { catched: pokemon } },
@@ -29,20 +40,18 @@ router.post('/:pokename', checkToken, (req, res) => {
       .catch(() => {
         res.status(404).send('User not found');
       });
-    } else {
-      res.status(500).send('Current pokemon does not exist');
-    }
-  })
+  } catch(e) {
+    res.status(404).send('Current pokemon does not exist');
+  }
 });
 
-router.get('/catched', checkToken, (req, res) => {
-  User.findById(req.userId)
-  .then((user) => {
+router.get('/catched', checkToken, async (req, res) => {
+  try {
+    const user = User.findById(req.userId);
     res.status(200).send(user.catched);
-  })
-  .catch((err) => {
-    res.status(500).send(err);
-  })
+  } catch(e) {
+    res.status(500).send('Authentication error');
+  }
 });
 
 module.exports = router;
